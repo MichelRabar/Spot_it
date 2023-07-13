@@ -1,11 +1,25 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
-</template>
+  <div id="app">
+    <!-- Image and text -->
+    <nav id="nav" class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img
+          src="@/assets/pngegg.png"
+          width="30"
+          height="30"
+          class="d-inline-block align-top"
+          alt=""
+        />
+        SPOT-IT
+      </a>
 
+      <!-- <router-link to="/">Home</router-link> -->
+      <router-link to="/login">Prijava</router-link>
+      <router-link to="/signup">Registracija</router-link>
+    </nav>
+  </div>
+  <router-view />
+</template>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
