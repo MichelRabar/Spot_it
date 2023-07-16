@@ -1,5 +1,5 @@
 <template>
-  <div class="registration" style="background-color: red">
+  <div class="signup" style="background-color: red">
     <div id="image-container" style="text-align: center">
       <img src="@/assets/pngegg.png" alt="" />
     </div>
