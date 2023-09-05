@@ -9,24 +9,33 @@
         <div class="col-sm-6">
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="options">
-              <button
-                type="button"
-                class="btn btn-primary btn-lg btn-block option"
-              >
-                Gym Istra
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary btn-lg btn-block option"
-              >
-                Workouts
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary btn-lg btn-block option"
-              >
-                Meal Plans
-              </button>
+              <!-- Dodajte router link za Gym Istra -->
+              <router-link to="/gym_istra">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg btn-block option"
+                >
+                  Gym Istra
+                </button>
+              </router-link>
+              <!-- Dodajte router link za Workouts -->
+              <router-link to="/workouts">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-lg btn-block option"
+                >
+                  Workouts
+                </button>
+              </router-link>
+              <!-- Dodajte router link za Meal Plans -->
+              <router-link to="/mealplans">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-lg btn-block option"
+                >
+                  Meal Plans
+                </button>
+              </router-link>
             </div>
           </div>
         </div>

@@ -17,6 +17,13 @@ const routes = [
     name: 'signup',
     component: () => import('../views/Signup.vue')
   },
+  {
+    path: '/gym_istra',
+    name: 'gym_istra',
+    component: () => import('../views/GymIstraView.vue')
+  },
+
+
 ];
 
 const router = createRouter({
