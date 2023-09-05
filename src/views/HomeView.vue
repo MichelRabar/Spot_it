@@ -28,7 +28,7 @@
                 </button>
               </router-link>
               <!-- Dodajte router link za Meal Plans -->
-              <router-link to="/mealplans">
+              <router-link to="/meal_plan">
                 <button
                   type="button"
                   class="btn btn-secondary btn-lg btn-block option"

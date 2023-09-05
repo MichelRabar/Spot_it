@@ -22,8 +22,16 @@ const routes = [
     name: 'gym_istra',
     component: () => import('../views/GymIstraView.vue')
   },
-
-
+  {
+    path: '/workouts',
+    name: 'workouts',
+    component: () => import('../views/WorkoutsView.vue')
+  },
+  {
+    path: '/meal_plan',
+    name: 'meal_plan',
+    component: () => import('../views/MealplanView.vue') // 
+  }
 ];
 
 const router = createRouter({
