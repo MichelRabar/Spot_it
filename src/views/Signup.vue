@@ -17,37 +17,20 @@
           >
             <form>
               <div class="form-group">
-                <label for="exampleInputName">Full Name</label>
+                <label for="exampleInputeMail">email</label>
                 <input
                   type="text"
+                  v-model="username"
                   class="form-control"
                   id="exampleInputName"
-                  placeholder="Enter your full name"
-                />
-              </div>
-              <div class="form-group">
-                <label for="exampleInputUsername">Username</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="exampleInputUsername"
-                  placeholder="Enter desired username"
-                />
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail">Email address</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="exampleInputEmail"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
+                  placeholder="Enter your email"
                 />
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword">Password</label>
                 <input
                   type="password"
+                  v-model="password"
                   class="form-control"
                   id="exampleInputPassword"
                   placeholder="Password"
@@ -59,13 +42,16 @@
                 >
                 <input
                   type="password"
+                  v-model="passwordrepeat"
                   class="form-control"
                   id="exampleInputConfirmPassword"
                   placeholder="Confirm Password"
                 />
               </div>
 
-              <button type="submit" class="btn btn-primary">Register</button>
+              <button type="button" @click="reg" class="btn btn-primary">
+                Register
+              </button>
             </form>
           </div>
         </div>
@@ -74,3 +60,36 @@
     </div>
   </div>
 </template>
+
+<script>
+import { auth } from "@/firebase"; // Import the auth service from your Firebase configuration file
+
+export default {
+  name: "reg",
+  data() {
+    return {
+      username: "",
+      password: "",
+      passwordrepeat: "",
+    };
+  },
+  methods: {
+    reg() {
+      auth()
+        .createUserWithEmailAndPassword(this.username, this.password)
+        .then(() => {
+          console.log("Uspjeh");
+        })
+        .catch((error) => {
+          console.error("Error during registration:", error);
+        });
+      console.log("Nastavak");
+    },
+  },
+};
+</script>
+
+
+
+
+
