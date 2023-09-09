@@ -49,7 +49,7 @@
                 />
               </div>
 
-              <button type="button" @click="reg" class="btn btn-primary">
+              <button type="button" @click="signup" class="btn btn-primary">
                 Register
               </button>
             </form>
@@ -62,10 +62,9 @@
 </template>
 
 <script>
-import { auth } from "@/firebase"; // Import the auth service from your Firebase configuration file
-
+import { firebase } from "@/firebase";
 export default {
-  name: "reg",
+  name: "Signup",
   data() {
     return {
       username: "",
@@ -74,22 +73,19 @@ export default {
     };
   },
   methods: {
-    reg() {
-      auth()
+    signup() {
+      firebase
+        .auth()
         .createUserWithEmailAndPassword(this.username, this.password)
-        .then(() => {
-          console.log("Uspjeh");
+        .then(function () {
+          console.log("uspjehn");
         })
-        .catch((error) => {
-          console.error("Error during registration:", error);
+        .catch(function (error) {
+          console.error("Doslo do greske", error);
         });
-      console.log("Nastavak");
+      console.log("nastavak");
     },
   },
 };
 </script>
-
-
-
-
 
