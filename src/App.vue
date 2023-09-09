@@ -14,12 +14,24 @@
       </a>
 
       <router-link to="/">Home</router-link>
-      <router-link to="/login">Prijava</router-link>
-      <router-link to="/signup">Registracija</router-link>
+
+      <!-- Prijava i registracija će se prikazivati samo ako korisnik nije ulogiran -->
+      <router-link v-if="!loggedIn" to="/login">Prijava</router-link>
+      <router-link v-if="!loggedIn" to="/signup">Registracija</router-link>
+
+      <!-- Ime korisnika i opcija za odjavu će se prikazivati samo ako je korisnik ulogiran -->
+      <div v-if="loggedIn">
+        <span>{{ currentUser }}</span>
+        <a href="#" @click="logout" class="nav-link">Logout</a>
+      </div>
     </nav>
   </div>
   <router-view />
 </template>
+
+
+
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -42,3 +54,49 @@ nav {
   }
 }
 </style>
+<script>
+import { firebase } from "@/firebase";
+
+export default {
+  name: "app",
+  data() {
+    return {
+      currentUser: null,
+    };
+  },
+
+  computed: {
+    loggedIn() {
+      // Koristite ovu computed osobinu da provjerite je li korisnik ulogiran
+      return !!this.currentUser;
+    },
+  },
+
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push("/login"); // Preusmjerite na stranicu za prijavu nakon odjave
+        });
+    },
+  },
+
+  created() {
+    // Postavite slušatelja za promjenu statusa autentifikacije
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // Korisnik je ulogiran
+        console.log("***", user.email);
+        this.currentUser = user.email;
+      } else {
+        // Korisnik nije ulogiran
+        console.log("***", "nema nikog");
+        this.currentUser = null;
+      }
+    });
+  },
+};
+</script>
+
