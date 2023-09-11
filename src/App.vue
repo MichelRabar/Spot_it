@@ -13,8 +13,6 @@
         SPOT-IT
       </a>
 
-      <router-link to="/">Home</router-link>
-
       <!-- Prijava i registracija će se prikazivati samo ako korisnik nije ulogiran -->
       <router-link v-if="!loggedIn" to="/login">Prijava</router-link>
       <router-link v-if="!loggedIn" to="/signup">Registracija</router-link>
@@ -23,6 +21,7 @@
       <div v-if="loggedIn">
         <span>{{ currentUser }}</span>
         <a href="#" @click="logout" class="nav-link">Logout</a>
+        <router-link to="/">Home</router-link>
       </div>
     </nav>
   </div>
