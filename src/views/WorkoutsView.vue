@@ -65,7 +65,7 @@
 </template>
 
 
-<!-- ostatak koda ostaje nepromijenjen -->
+
 
 
 <style scoped>
@@ -77,11 +77,11 @@
 }
 
 .card-title {
-  font-size: 1.25rem; /* Podesite veličinu fonta za naslov */
+  font-size: 1.25rem;
 }
 
 .card-text {
-  font-size: 1rem; /* Podesite veličinu fonta za tekst */
+  font-size: 1rem;
 }
 </style>
 
@@ -92,7 +92,7 @@ import { db, firebase } from "@/firebase";
 export default {
   data() {
     return {
-      temas: [], // Inicijalno prazno polje
+      temas: [],
       showForm: false,
       newWorkoutTitle: "",
       newWorkoutDescription: "",
@@ -128,12 +128,8 @@ export default {
       this.showForm = true;
     },
     addWorkout() {
-      // Ovdje možete dodati logiku za spremanje teme i opisa teme
-      // Nakon što se podaci spreme, možete ih resetirati i sakriti formu
       console.log("Nova tema:", this.newWorkoutTitle);
       console.log("Opis nove teme:", this.newWorkoutDescription);
-
-      // Nakon što završite s logikom spremanja, resetirajte i sakrijte formu
 
       const tema = this.newWorkoutTitle;
       const temaopis = this.newWorkoutDescription;
@@ -146,7 +142,7 @@ export default {
           .add({
             temaposta: tema,
             desc: temaopis,
-            email: user.email, // Koristimo user.email za email korisnika
+            email: user.email,
             posted_at: Date.now(),
           })
           .then((doc) => {
@@ -157,7 +153,6 @@ export default {
           });
       } else {
         console.error("Korisnik nije prijavljen");
-        // Ovdje možete dodati logiku za upravljanje situacijom kada korisnik nije prijavljen
       }
     },
   },

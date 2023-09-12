@@ -2,83 +2,85 @@
   <div class="gym-istra-page" style="background-color: red">
     <div class="container">
       <div class="row">
-        <!-- Prva slika teretane s ocjenama -->
-        <div class="col-6 col-md-3 text-center">
-          <img src="@/assets/pngegg.png" alt="Gym" class="img-fluid" />
-          <div class="rating">
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
+        <!-- Prva slika teretane -->
+        <div class="col-md-12 text-center">
+          <div class="gym-card">
+            <a>Elite Gym</a>
+            <div class="gym-image">
+              <img
+                src="@/assets/2023-06-19.png"
+                alt="Gym"
+                class="img-fluid gym-image"
+              />
+            </div>
+            <button @click="showComment(0)" class="btn btn-primary">
+              Dodaj komentar
+            </button>
           </div>
+          <div v-if="commentsVisible[0]" class="comments"></div>
         </div>
 
-        <!-- Druga slika teretane s ocjenama -->
-        <div class="col-6 col-md-3 text-center">
-          <img src="@/assets/pngegg.png" alt="Gym" class="img-fluid" />
-          <div class="rating">
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
+        <!-- Druga slika teretane -->
+        <div class="col-md-12 text-center">
+          <div class="gym-card">
+            <a>Pro Gym</a>
+            <div class="gym-image">
+              <img
+                src="@/assets/347416938_813710180459941_6096380632361339768_n.png"
+                alt="Gym"
+                class="img-fluid gym-image"
+              />
+            </div>
+            <button @click="showComment(1)" class="btn btn-primary">
+              Dodaj komentar
+            </button>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Razmak između dviju grupa slika -->
-    <div style="height: 20px"></div>
-
-    <!-- Treća slika teretane s ocjenama -->
-    <div class="container">
-      <div class="row">
-        <div class="col-6 col-md-3 text-center">
-          <img src="src/assets/2023-06-19.jpg" alt="Gym" class="img-fluid" />
-          <div class="rating">
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-          </div>
-        </div>
-
-        <!-- Četvrta slika teretane s ocjenama -->
-        <div class="col-6 col-md-3 text-center">
-          <img
-            src="src/assets/347416938_813710180459941_6096380632361339768_n.jpg"
-            alt="Gym"
-            class="img-fluid"
-          />
-          <div class="rating">
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-            <span class="star">&#9733;</span>
-          </div>
+          <div v-if="commentsVisible[1]" class="comments"></div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      commentsVisible: [false, false],
+    };
+  },
+  methods: {
+    showComment(index) {
+      this.commentsVisible[index] = !this.commentsVisible[index];
+    },
+  },
+};
+</script>
+
 <style scoped>
 .gym-istra-page {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: red;
+  min-height: 100vh;
+}
+
+.gym-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
   text-align: center;
-  color: #2c3e50;
-  padding: 20px; /* Dodajte razmak oko slika */
+  background-color: #f5f5f5;
 }
 
-.rating {
-  font-size: 24px;
+.gym-image {
+  margin: 10px 0;
+  max-width: 200px;
+  height: auto;
+}
+
+.comments {
+  padding: 10px;
   margin-top: 10px;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
 }
-
-.star {
-  color: #ffd700; /* Boja za zvjezdicu */
-}
-/* Dodajte dodatne stilove prema vašim potrebama */
 </style>
