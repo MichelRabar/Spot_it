@@ -2,60 +2,55 @@
   <div class="gym-istra-page" style="background-color: red">
     <div class="container">
       <div class="row">
-        <!-- Prva slika teretane -->
         <div class="col-md-12 text-center">
+          <!-- Teretana i komentari jedan ispod drugog -->
           <div class="gym-card">
-            <a>Elite Gym</a>
-            <div class="gym-image">
-              <img
-                src="@/assets/2023-06-19.png"
-                alt="Gym"
-                class="img-fluid gym-image"
-              />
+            <div class="gym-details">
+              <h2>Elite-Gym Žminj</h2>
+              <div class="gym-image">
+                <img
+                  src="@/assets/2023-06-19.png"
+                  alt="Gym"
+                  class="img-fluid gym-image-small"
+                />
+              </div>
             </div>
-            <button @click="showComment(0)" class="btn btn-primary">
-              Dodaj komentar
-            </button>
-          </div>
-          <div v-if="commentsVisible[0]" class="comments"></div>
-        </div>
-
-        <!-- Druga slika teretane -->
-        <div class="col-md-12 text-center">
-          <div class="gym-card">
-            <a>Pro Gym</a>
-            <div class="gym-image">
-              <img
-                src="@/assets/347416938_813710180459941_6096380632361339768_n.png"
-                alt="Gym"
-                class="img-fluid gym-image"
-              />
+            <div class="comment-form">
+              <button @click="showAddCommentForm" class="btn btn-primary">
+                Dodaj komentar
+              </button>
+              <div v-if="showCommentForm" class="comment-input">
+                <textarea
+                  v-model="newCommentText"
+                  placeholder="Unesite svoj komentar"
+                ></textarea>
+                <button @click="addComment" class="btn btn-primary">
+                  Spremi komentar
+                </button>
+              </div>
             </div>
-            <button @click="showComment(1)" class="btn btn-primary">
-              Dodaj komentar
-            </button>
           </div>
-          <div v-if="commentsVisible[1]" class="comments"></div>
+          <!-- Prikaz komentara ispod slike teretane -->
+          <div class="comments">
+            <h3>Komentari:</h3>
+            <ul>
+              <li
+                v-for="(comment, commentIndex) in comments"
+                :key="commentIndex"
+                class="comment-item"
+              >
+                <div class="comment-details">
+                  <strong>{{ comment.email }}</strong>
+                  <p>{{ comment.text }}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      commentsVisible: [false, false],
-    };
-  },
-  methods: {
-    showComment(index) {
-      this.commentsVisible[index] = !this.commentsVisible[index];
-    },
-  },
-};
-</script>
 
 <style scoped>
 .gym-istra-page {
@@ -64,17 +59,17 @@ export default {
 }
 
 .gym-card {
-  border: 1px solid #ccc;
-  padding: 20px;
+  border: 0.5px solid #ccc;
+  padding: 5px;
   margin-bottom: 20px;
   text-align: center;
   background-color: #f5f5f5;
 }
 
-.gym-image {
-  margin: 10px 0;
+.gym-image-small {
   max-width: 200px;
   height: auto;
+  margin-top: 20px;
 }
 
 .comments {
@@ -83,4 +78,88 @@ export default {
   border: 1px solid #ccc;
   background-color: #f5f5f5;
 }
+
+.comment-item {
+  list-style-type: none;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.comment-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 </style>
+<script>
+import { db, firebase } from "@/firebase";
+
+export default {
+  data() {
+    return {
+      comments: [],
+      showCommentForm: false,
+      newCommentText: "",
+    };
+  },
+
+  mounted() {
+    this.getComments();
+  },
+
+  methods: {
+    getComments() {
+      console.log("Dohvati komentare iz Firebasea");
+      db.collection("comments")
+        .get()
+        .then((querySnapshot) => {
+          this.comments = [];
+          querySnapshot.forEach((doc) => {
+            console.log("ID komentara:", doc.id);
+            const commentData = doc.data();
+            this.comments.push({
+              id: doc.id,
+              text: commentData.text,
+              email: commentData.email,
+              posted_at: commentData.createdAt,
+            });
+          });
+        })
+        .catch((error) => {
+          console.error("Greška prilikom dohvaćanja komentara: ", error);
+        });
+    },
+
+    showAddCommentForm() {
+      this.showCommentForm = true;
+    },
+
+    addComment() {
+      console.log("Novi komentar:", this.newCommentText);
+
+      const commentText = this.newCommentText;
+      this.showCommentForm = false;
+
+      const user = firebase.auth().currentUser;
+
+      if (user) {
+        db.collection("comments")
+          .add({
+            text: commentText,
+            email: user.email,
+            createdAt: new Date(),
+          })
+          .then((doc) => {
+            console.log("Komentar uspješno spremljen s ID-om: ", doc.id);
+          })
+          .catch((error) => {
+            console.error("Greška prilikom spremanja komentara: ", error);
+          });
+      } else {
+        console.error("Korisnik nije prijavljen");
+      }
+    },
+  },
+};
+</script>
