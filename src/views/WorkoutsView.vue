@@ -50,23 +50,19 @@
         </div>
         <div class="form-group">
           <label for="workoutDescription">Opis teme</label>
-          <input
+          <textarea
             v-model="newWorkoutDescription"
-            type="text"
             class="form-control ml-2"
             placeholder="Unesite opis teme"
             id="workoutDescription"
-          />
+            rows="10"
+          ></textarea>
         </div>
         <button type="submit" class="btn btn-primary ml-2">Dodaj temu</button>
       </form>
     </div>
   </div>
 </template>
-
-
-
-
 
 <style scoped>
 .workouts-page {
@@ -84,7 +80,6 @@
   font-size: 1rem;
 }
 </style>
-
 
 <script>
 import { db, firebase } from "@/firebase";
@@ -116,8 +111,8 @@ export default {
             this.temas.push({
               id: doc.id,
               time: data.posted_at,
-              description: data.desc,
-              temanaziv: data.temaposta,
+              title: data.temaposta, // Dodajemo dohvaćanje naslova teme
+              description: data.desc, // Dodajemo dohvaćanje opisa teme
               url: data.url,
             });
           });

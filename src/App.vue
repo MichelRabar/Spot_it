@@ -13,6 +13,8 @@
         SPOT-IT
       </a>
 
+      <router-link to="/Kontakt" class="nav-link">Kontakt</router-link>
+
       <!-- Prijava i registracija će se prikazivati samo ako korisnik nije ulogiran -->
       <router-link v-if="!loggedIn" to="/login">Prijava</router-link>
       <router-link v-if="!loggedIn" to="/signup">Registracija</router-link>
@@ -27,6 +29,8 @@
   </div>
   <router-view />
 </template>
+
+<!-- Vaš preostali CSS i JavaScript ostaje nepromijenjen. -->
 
 
 
@@ -66,7 +70,7 @@ export default {
 
   computed: {
     loggedIn() {
-      // Koristite ovu computed osobinu da provjerite je li korisnik ulogiran
+      // Koristimo ovo jer mi ne radi current.user od storagea
       return !!this.currentUser;
     },
   },
@@ -83,7 +87,6 @@ export default {
   },
 
   created() {
-    // Postavite slušatelja za promjenu statusa autentifikacije
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // Korisnik je ulogiran
