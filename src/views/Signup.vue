@@ -17,12 +17,12 @@
           >
             <form>
               <div class="form-group">
-                <label for="exampleInputeMail">email</label>
+                <label for="exampleInputEmail">Email</label>
                 <input
-                  type="text"
-                  v-model="username"
+                  type="email"
+                  v-model="email"
                   class="form-control"
-                  id="exampleInputName"
+                  id="exampleInputEmail"
                   placeholder="Enter your email"
                 />
               </div>
@@ -42,13 +42,18 @@
                 >
                 <input
                   type="password"
-                  v-model="passwordrepeat"
+                  v-model="passwordRepeat"
                   class="form-control"
                   id="exampleInputConfirmPassword"
                   placeholder="Confirm Password"
                 />
               </div>
-
+              <div
+                class="alert alert-danger"
+                v-if="password !== passwordRepeat"
+              >
+                Passwords do not match.
+              </div>
               <button type="button" @click="signup" class="btn btn-primary">
                 Register
               </button>
@@ -67,25 +72,28 @@ export default {
   name: "Signup",
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
-      passwordrepeat: "",
+      passwordRepeat: "",
     };
   },
   methods: {
     signup() {
+      if (this.password !== this.passwordRepeat) {
+        return; // Ako se lozinke ne podudaraju, nećemo izvršiti registraciju
+      }
+
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.username, this.password)
-        .then(function () {
-          console.log("uspjehn");
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          console.log("Uspješno registriran korisnik");
+          this.$router.replace({ name: "login" });
         })
-        .catch(function (error) {
-          console.error("Doslo do greske", error);
+        .catch((error) => {
+          console.error("Došlo je do greške pri registraciji", error);
         });
-      console.log("nastavak");
     },
   },
 };
 </script>
-
